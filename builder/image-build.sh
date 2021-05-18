@@ -58,4 +58,6 @@ echo_stamp "Unzipping Linux distribution image" \
 && echo_stamp "Unzipping complete" "SUCCESS" \
 
 
-
+ls
+touch test.py
+python3 test.py
