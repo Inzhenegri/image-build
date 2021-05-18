@@ -64,9 +64,14 @@ apt install python3-pip
 apt install git
 echo_stamp "SUCCESS"
 
+# Downloading python packages
 echo_stamp "Downloading python packages"
-git clone 
+git clone https://github.com/Inzhenegri/Requirements.git
+cd Requirements
+pip3 install -r requirements.txt
 echo_stamp "SUCCESS"
+
+# Downloading pigpio
 
 ls
 touch test.py
