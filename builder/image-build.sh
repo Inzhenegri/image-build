@@ -52,11 +52,6 @@ echo_stamp "Downloading original Linux distribution"
 wget --progress=dot:giga -O test.zip ${SOURCE_IMAGE}
 echo_stamp "Downloading complete" "SUCCESS" \
 
-
-echo_stamp "Unzipping Linux distribution image" \
-&& unzip -p ${BUILD_DIR}/  \
-&& echo_stamp "Unzipping complete" "SUCCESS" \
-
 echo_stamp "Downloading python3 and pip3"
 apt update
 apt install python3 python3-pip -y
@@ -86,3 +81,15 @@ echo_stamp "Downloaded packages" "SUCCESS"
 # echo_stamp "Installed from requirements.txt" "SUCCESS"
 
 # Downloading pigpio
+echo_stamp "Installing pigpio"
+wget https://github.com/joan2937/pigpio/archive/master.zip
+unzip master.zip
+cd pigpio-master
+make
+make install
+echo_stamp "Installed pigpio" "SUCCESS"
+
+# Unzipping Linux distribution image
+echo_stamp "Unzipping Linux distribution image" \
+&& unzip -p ${BUILD_DIR}/  \
+&& echo_stamp "Unzipping complete" "SUCCESS" \
