@@ -57,18 +57,27 @@ echo_stamp "Unzipping Linux distribution image" \
 && unzip -p ${BUILD_DIR}/  \
 && echo_stamp "Unzipping complete" "SUCCESS" \
 
-echo_stamp "Downloading python"
+echo_stamp "Downloading python3 and pip3"
 apt update
-apt install python3 python3-pip git -y
-echo_stamp "SUCCESS"
+apt install python3 python3-pip -y
+echo_stamp "Downloaded python3 and pip3" "SUCCESS"
 
-# Downloading python packages
-echo_stamp "Downloading python packages"
-git config --global user.name "arskosh05@mail.ru"
-git config --global user.email arskosh05@mail.ru
-ls
+# Configuring git
+# echo_stamp "Configuring git"
+# git config --global user.name "arskosh05@mail.ru"
+# git config --global user.email arskosh05@mail.ru
+# ls
+
+# Downloading setuptools
+echo_stamp "Downloading setuptools"
+pip3 install --upgrade setuptools
+echo_stamp "setuptools are downloaded" "SUCCESS"
+
+# Installing dependencies from requirements.txt
+echo_stamp "Installing dependencies from requirements.txt"
+pip3 install --upgrade pip
 pip3 install -r requirements.txt
-echo_stamp "SUCCESS"
+echo_stamp "Installed from requirements.txt" "SUCCESS"
 
 # Downloading pigpio
 
