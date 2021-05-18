@@ -59,15 +59,14 @@ echo_stamp "Unzipping Linux distribution image" \
 
 echo_stamp "Downloading python"
 apt update
-apt install python3
-apt install python3-pip
-apt install git
+apt install python3 python3-pip git -y
 echo_stamp "SUCCESS"
 
 # Downloading python packages
 echo_stamp "Downloading python packages"
-git clone https://github.com/Inzhenegri/Requirements.git
-cd Requirements
+git config --global user.name "arskosh05@mail.ru"
+git config --global user.email arskosh05@mail.ru
+ls
 pip3 install -r requirements.txt
 echo_stamp "SUCCESS"
 
