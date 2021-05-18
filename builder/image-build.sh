@@ -73,14 +73,16 @@ echo_stamp "Downloading setuptools"
 pip3 install --upgrade setuptools
 echo_stamp "setuptools are downloaded" "SUCCESS"
 
-# Installing dependencies from requirements.txt
-echo_stamp "Installing dependencies from requirements.txt"
+# Installing packages
+echo_stamp "Installing packages"
 pip3 install --upgrade pip
-pip3 install -r requirements.txt
-echo_stamp "Installed from requirements.txt" "SUCCESS"
+pip3 install numpy opencv-python pyzmq
+echo_stamp "Downloaded packages" "SUCCESS"
+
+# Installing dependencies from requirements.txt
+# echo_stamp "Installing dependencies from requirements.txt"
+# pip3 install --upgrade pip
+# pip3 install -r requirements.txt
+# echo_stamp "Installed from requirements.txt" "SUCCESS"
 
 # Downloading pigpio
-
-ls
-touch test.py
-python3 test.py
