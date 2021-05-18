@@ -57,6 +57,16 @@ echo_stamp "Unzipping Linux distribution image" \
 && unzip -p ${BUILD_DIR}/  \
 && echo_stamp "Unzipping complete" "SUCCESS" \
 
+echo_stamp "Downloading python"
+apt update
+apt install python3
+apt install python3-pip
+apt install git
+echo_stamp "SUCCESS"
+
+echo_stamp "Downloading python packages"
+git clone 
+echo_stamp "SUCCESS"
 
 ls
 touch test.py
