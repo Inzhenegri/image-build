@@ -71,7 +71,7 @@ echo_stamp "setuptools are downloaded" "SUCCESS"
 # Installing packages
 echo_stamp "Installing packages"
 pip3 install --upgrade pip
-pip3 install numpy opencv-python pyzmq
+pip3 install numpy opencv-python pyzmq pygame pyzbar tensorflow
 echo_stamp "Downloaded packages" "SUCCESS"
 
 # Installing dependencies from requirements.txt
