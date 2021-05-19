@@ -46,12 +46,17 @@ REPO_DIR="${BUILDER_DIR}/repo"
 SCRIPTS_DIR="${REPO_DIR}/builder"
 IMAGES_DIR="${REPO_DIR}/images"
 
+# Downloading original Linux distribution
+# echo_stamp "Downloading original Linux distribution"
+# wget --progress=dot:giga -O test.zip ${SOURCE_IMAGE}
+# echo_stamp "Downloading complete" "SUCCESS" \
 
+# Unzipping Linux distribution image
+echo_stamp "Unzipping Linux distribution image" \
+&& unzip -p ${BUILD_DIR}/  \
+&& echo_stamp "Unzipping complete" "SUCCESS" \
 
-echo_stamp "Downloading original Linux distribution"
-wget --progress=dot:giga -O test.zip ${SOURCE_IMAGE}
-echo_stamp "Downloading complete" "SUCCESS" \
-
+# Downloading python3 and pip3
 echo_stamp "Downloading python3 and pip3"
 apt update
 apt install python3 python3-pip -y
@@ -88,8 +93,3 @@ cd pigpio-master
 make
 make install
 echo_stamp "Installed pigpio" "SUCCESS"
-
-# Unzipping Linux distribution image
-echo_stamp "Unzipping Linux distribution image" \
-&& unzip -p ${BUILD_DIR}/  \
-&& echo_stamp "Unzipping complete" "SUCCESS" \
