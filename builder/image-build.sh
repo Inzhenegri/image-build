@@ -62,8 +62,6 @@ echo_stamp "Unzipping Linux distribution image" \
 && echo_stamp "Unzipping complete" "SUCCESS" \
 || (echo_stamp "Unzipping was failed!" "ERROR"; exit 1)
 
-${BUILDER_DIR}/image-resize.sh ${IMAGE_PATH} max '7G'
-
 # Downloading python3 and pip3
 echo_stamp "Downloading python3 and pip3"
 apt update
