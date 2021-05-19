@@ -41,20 +41,28 @@ echo_stamp() {
   echo -e ${TEXT}
 }
 
+BUILD_DIR="/build"
 BUILDER_DIR="/builder"
 REPO_DIR="${BUILDER_DIR}/repo"
 SCRIPTS_DIR="${REPO_DIR}/builder"
 IMAGES_DIR="${REPO_DIR}/images"
+RPI_ZIP_NAME="test.zip"
+RPI_IMAGE_NAME=$(echo ${RPI_ZIP_NAME} | sed 's/zip/img/')
 
 # Downloading original Linux distribution
-# echo_stamp "Downloading original Linux distribution"
-# wget --progress=dot:giga -O test.zip ${SOURCE_IMAGE}
-# echo_stamp "Downloading complete" "SUCCESS" \
+if [ ! -e "${RPI_ZIP_NAME}" ]; then
+  echo_stamp "Downloading original Linux distribution"
+  wget --progress=dot:giga -O ${RPI_ZIP_NAME} ${SOURCE_IMAGE}
+  echo_stamp "Downloading complete" "SUCCESS" \
+else echo_stamp "Linux distribution already donwloaded"; fi
 
 # Unzipping Linux distribution image
 echo_stamp "Unzipping Linux distribution image" \
-&& unzip -p ${BUILD_DIR}/  \
+&& unzip ${RPI_ZIP_NAME} \
 && echo_stamp "Unzipping complete" "SUCCESS" \
+|| (echo_stamp "Unzipping was failed!" "ERROR"; exit 1)
+
+${BUILDER_DIR}/image-resize.sh ${IMAGE_PATH} max '7G'
 
 # Downloading python3 and pip3
 echo_stamp "Downloading python3 and pip3"
