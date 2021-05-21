@@ -63,12 +63,8 @@ echo_stamp "Unzipping Linux distribution image" \
 && echo_stamp "Unzipping complete" "SUCCESS" \
 || (echo_stamp "Unzipping was failed!" "ERROR"; exit 1)
 
-# echo_stamp "Cd"
-# cd /usr/sbin
-# ls
-# echo_stamp "CD" "SUCCESS"
-
 /usr/sbin/img-resize ${IMAGE_NAME} max '7G'
+/usr/sbin/img-chroot ${IMAGE_NAME} copy "builder/assets/init_rpi.sh" "/root/"
 
 
 # Downloading python3 and pip3
