@@ -48,6 +48,7 @@ SCRIPTS_DIR="${REPO_DIR}/builder"
 IMAGES_DIR="${REPO_DIR}/images"
 RPI_ZIP_NAME="test.zip"
 RPI_IMAGE_NAME=$(echo ${RPI_ZIP_NAME} | sed 's/zip/img/')
+IMAGE_NAME="2021-01-11-raspios-buster-armhf-lite.img"
 
 # Downloading original Linux distribution
 if [ ! -e "${RPI_ZIP_NAME}" ]; then
@@ -62,40 +63,36 @@ echo_stamp "Unzipping Linux distribution image" \
 && echo_stamp "Unzipping complete" "SUCCESS" \
 || (echo_stamp "Unzipping was failed!" "ERROR"; exit 1)
 
-# Downloading python3 and pip3
-echo_stamp "Downloading python3 and pip3"
-apt update
-apt install python3 python3-pip -y
-echo_stamp "Downloaded python3 and pip3" "SUCCESS"
-
-# Configuring git
-# echo_stamp "Configuring git"
-# git config --global user.name "arskosh05@mail.ru"
-# git config --global user.email arskosh05@mail.ru
+# echo_stamp "Cd"
+# cd /usr/sbin
 # ls
+# echo_stamp "CD" "SUCCESS"
 
-# Downloading setuptools
-echo_stamp "Downloading setuptools"
-pip3 install --upgrade setuptools
-echo_stamp "setuptools are downloaded" "SUCCESS"
+/usr/sbin/img-resize ${IMAGE_NAME} max '7G'
 
-# Installing packages
-echo_stamp "Installing packages"
-pip3 install --upgrade pip
-pip3 install numpy opencv-python pyzmq pygame pyzbar tensorflow
-echo_stamp "Downloaded packages" "SUCCESS"
 
-# Installing dependencies from requirements.txt
-# echo_stamp "Installing dependencies from requirements.txt"
+# Downloading python3 and pip3
+# echo_stamp "Downloading python3 and pip3"
+# apt update
+# apt install python3 python3-pip -y
+# echo_stamp "Downloaded python3 and pip3" "SUCCESS"
+
+# # Downloading setuptools
+# echo_stamp "Downloading setuptools"
+# pip3 install --upgrade setuptools
+# echo_stamp "setuptools are downloaded" "SUCCESS"
+
+# # Installing packages
+# echo_stamp "Installing packages"
 # pip3 install --upgrade pip
-# pip3 install -r requirements.txt
-# echo_stamp "Installed from requirements.txt" "SUCCESS"
+# pip3 install numpy opencv-python pyzmq pygame pyzbar tensorflow
+# echo_stamp "Downloaded packages" "SUCCESS"
 
-# Downloading pigpio
-echo_stamp "Installing pigpio"
-wget https://github.com/joan2937/pigpio/archive/master.zip
-unzip master.zip
-cd pigpio-master
-make
-make install
-echo_stamp "Installed pigpio" "SUCCESS"
+# # Downloading pigpio
+# echo_stamp "Installing pigpio"
+# wget https://github.com/joan2937/pigpio/archive/master.zip
+# unzip master.zip
+# cd pigpio-master
+# make
+# make install
+# echo_stamp "Installed pigpio" "SUCCESS"
