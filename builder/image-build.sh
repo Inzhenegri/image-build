@@ -65,6 +65,27 @@ echo_stamp "Unzipping Linux distribution image" \
 
 /usr/sbin/img-resize ${IMAGE_NAME} max '7G'
 /usr/sbin/img-chroot ${IMAGE_NAME} copy "builder/assets/init_rpi.sh" "/root/"
+/usr/sbin/img-chroot ${IMAGE_NAME} copy "builder/assets/hardware_setup.sh" "/root/"
+/usr/sbin/img-chroot ${IMAGE_NAME} copy "builder/image-init.sh" "/root/"
+
+# Monkey
+/usr/sbin/img-chroot ${IMAGE_NAME} copy "builder/assets/monkey" "/root/"
+
+# # rsyslog config
+/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/rsyslog.conf' '/etc'
+/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/rsysrot.sh' '/etc/rsyslog.d'
+# # Butterfly
+/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/butterfly.service' '/lib/systemd/system/'
+/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/butterfly.socket' '/lib/systemd/system/'
+/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/monkey.service' '/lib/systemd/system/'
+# # software install
+/usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-software.sh'
+# # examples
+# /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/examples' '/home/pi/'  # TODO: symlink?
+# # network setup
+# /usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-network.sh'
+# # avahi setup
+# /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/avahi-services/sftp-ssh.service' '/etc/avahi/services'
 
 
 # Downloading python3 and pip3

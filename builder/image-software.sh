@@ -82,8 +82,8 @@ apt-get update
 
 # Let's retry fetching those packages several times, just in case
 echo_stamp "Software installing"
-my_travis_retry apt-get install --no-install-recommends -y cmake-data=3.13.4-1 cmake=3.13.4-1 # FIXME: using older CMake due to https://travis-ci.org/github/CopterExpress/clover/jobs/764367665#L6984
-my_travis_retry apt-get install --no-install-recommends -y \
+apt-get install --no-install-recommends -y cmake-data=3.13.4-1 cmake=3.13.4-1 # FIXME: using older CMake due to https://travis-ci.org/github/CopterExpress/clover/jobs/764367665#L6984
+apt-get install --no-install-recommends -y \
 unzip \
 zip \
 ipython \
@@ -128,29 +128,36 @@ curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip2.py
 python3 get-pip.py
 python get-pip2.py
 rm get-pip.py get-pip2.py
-#my_travis_retry pip install --upgrade pip
-#my_travis_retry pip3 install --upgrade pip
+
+pip install --upgrade pip
+pip3 install --upgrade pip
 
 echo_stamp "Make sure both pip and pip3 are installed"
 pip --version
 pip3 --version
 
-echo_stamp "Install and enable Butterfly (web terminal)"
-echo_stamp "Workaround for tornado >= 6.0 breaking butterfly"
-export CRYPTOGRAPHY_DONT_BUILD_RUST=1
-my_travis_retry pip3 install tornado==5.1.1
-my_travis_retry pip3 install butterfly
-my_travis_retry pip3 install butterfly[systemd]
-systemctl enable butterfly.socket
+echo_stamp "Installing pyzmq"
+pip install pyzmq
+pip3 install pyzmq
+echo_stamp "Installed pyzmq" "SUCCESS"
+
+# echo_stamp "Install and enable Butterfly (web terminal)"
+# echo_stamp "Workaround for tornado >= 6.0 breaking butterfly"
+# export CRYPTOGRAPHY_DONT_BUILD_RUST=1
+# my_travis_retry pip3 install tornado==5.1.1
+# my_travis_retry pip3 install butterfly
+# my_travis_retry pip3 install butterfly[systemd]
+# systemctl enable butterfly.socket
 
 echo_stamp "Install ws281x library"
-my_travis_retry pip install --prefer-binary rpi_ws281x
+pip install --prefer-binary rpi_ws281x
 
 echo_stamp "Setup Monkey"
 mv /etc/monkey/sites/default /etc/monkey/sites/default.orig
 mv /root/monkey /etc/monkey/sites/default
 sed -i 's/SymLink Off/SymLink On/' /etc/monkey/monkey.conf
 systemctl enable monkey.service
+echo_stamp "Setup Monkey done" "SUCCESS"
 
 echo_stamp "Install Node.js"
 cd /home/pi
@@ -161,12 +168,12 @@ rm -rf node-v10.15.0-linux-armv6l/
 rm node-v10.15.0-linux-armv6l.tar.gz
 
 echo_stamp "Installing ptvsd"
-my_travis_retry pip install ptvsd
-my_travis_retry pip3 install ptvsd
+pip install ptvsd
+pip3 install ptvsd
 
 echo_stamp "Installing pyzbar"
-my_travis_retry pip install pyzbar
-my_travis_retry pip3 install pyzbar
+pip install pyzbar
+pip3 install pyzbar
 
 echo_stamp "Add .vimrc"
 cat << EOF > /home/pi/.vimrc
@@ -185,3 +192,8 @@ gpgconf --kill dirmngr
 pkill -9 -f dirmngr || true
 
 echo_stamp "End of software installation"
+
+echo_stamp "Testing"
+git clone --single-branch --branch stable https://github.com/Arseniyyy/banana.git
+cd banana
+python3 all_4_raspberry.py
