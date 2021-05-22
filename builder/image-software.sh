@@ -137,7 +137,6 @@ pip --version
 pip3 --version
 
 echo_stamp "Installing pyzmq"
-pip install pyzmq
 pip3 install pyzmq
 echo_stamp "Installed pyzmq" "SUCCESS"
 
