@@ -78,7 +78,16 @@ echo_stamp "Update apt cache"
 
 # TODO: FIX ERROR: /usr/bin/apt-key: 596: /usr/bin/apt-key: cannot create /dev/null: Permission denied
 apt-get update
-# && apt upgrade -y
+
+echo_stamp "Update apt"
+apt update
+dpkg --configure -a
+echo_stamp "Apt updated" "SUCCESS"
+
+echo_stamp "Upgrading installed packages"
+apt-get upgrade -y
+apt upgrade -y
+echo_stamp "Upgraded" "SUCCESS"
 
 # Let's retry fetching those packages several times, just in case
 echo_stamp "Software installing"
