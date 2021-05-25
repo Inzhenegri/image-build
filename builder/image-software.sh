@@ -91,7 +91,7 @@ echo_stamp "Upgraded" "SUCCESS"
 
 # Let's retry fetching those packages several times, just in case
 echo_stamp "Software installing"
-apt-get install --no-install-recommends -y cmake-data=3.13.4-1 cmake=3.13.4-1 # FIXME: using older CMake due to https://travis-ci.org/github/CopterExpress/clover/jobs/764367665#L6984
+apt-get install --no-install-recommends -y --allow-downgrades cmake-data=3.13.4-1 cmake=3.13.4-1 # FIXME: using older CMake due to https://travis-ci.org/github/CopterExpress/clover/jobs/764367665#L6984
 apt-get install --no-install-recommends -y \
 unzip \
 zip \
@@ -146,20 +146,21 @@ pip --version
 pip3 --version
 
 echo_stamp "Installing packages"
-pip3 install numpy opencv-python pyzmq pygame pyzbar tensorflow imagezmq
+pip install numpy pyzmq pygame pyzbar tensorflow imagezmq
+pip3 install numpy pyzmq pygame pyzbar tensorflow imagezmq
 echo_stamp "Installed pyzmq" "SUCCESS"
 
 echo_stamp "Downloading setuptools"
 pip3 install --upgrade setuptools
 echo_stamp "setuptools are downloaded" "SUCCESS"
 
-# echo_stamp "Install and enable Butterfly (web terminal)"
-# echo_stamp "Workaround for tornado >= 6.0 breaking butterfly"
-# export CRYPTOGRAPHY_DONT_BUILD_RUST=1
-# my_travis_retry pip3 install tornado==5.1.1
-# my_travis_retry pip3 install butterfly
-# my_travis_retry pip3 install butterfly[systemd]
-# systemctl enable butterfly.socket
+echo_stamp "Install and enable Butterfly (web terminal)"
+echo_stamp "Workaround for tornado >= 6.0 breaking butterfly"
+export CRYPTOGRAPHY_DONT_BUILD_RUST=1
+my_travis_retry pip3 install tornado==5.1.1
+my_travis_retry pip3 install butterfly
+my_travis_retry pip3 install butterfly[systemd]
+systemctl enable butterfly.socket
 
 echo_stamp "Install ws281x library"
 pip install --prefer-binary rpi_ws281x
@@ -205,7 +206,7 @@ pkill -9 -f dirmngr || true
 
 echo_stamp "End of software installation"
 
-echo_stamp "Testing"
-git clone --single-branch --branch stable https://github.com/Arseniyyy/banana.git
-cd banana
-python3 all_4_raspberry.py
+# echo_stamp "Testing"
+# git clone --single-branch --branch stable https://github.com/Arseniyyy/banana.git
+# cd banana
+# python3 all_4_raspberry.py
