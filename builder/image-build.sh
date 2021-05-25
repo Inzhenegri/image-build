@@ -94,17 +94,6 @@ echo_stamp "Unzipping Linux distribution image" \
 # apt install python3 python3-pip -y
 # echo_stamp "Downloaded python3 and pip3" "SUCCESS"
 
-# # Downloading setuptools
-# echo_stamp "Downloading setuptools"
-# pip3 install --upgrade setuptools
-# echo_stamp "setuptools are downloaded" "SUCCESS"
-
-# # Installing packages
-# echo_stamp "Installing packages"
-# pip3 install --upgrade pip
-# pip3 install numpy opencv-python pyzmq pygame pyzbar tensorflow
-# echo_stamp "Downloaded packages" "SUCCESS"
-
 # # Downloading pigpio
 # echo_stamp "Installing pigpio"
 # wget https://github.com/joan2937/pigpio/archive/master.zip

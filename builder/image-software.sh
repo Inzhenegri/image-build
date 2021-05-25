@@ -145,9 +145,13 @@ echo_stamp "Make sure both pip and pip3 are installed"
 pip --version
 pip3 --version
 
-echo_stamp "Installing pyzmq"
-pip3 install pyzmq
+echo_stamp "Installing packages"
+pip3 install numpy opencv-python pyzmq pygame pyzbar tensorflow imagezmq
 echo_stamp "Installed pyzmq" "SUCCESS"
+
+echo_stamp "Downloading setuptools"
+pip3 install --upgrade setuptools
+echo_stamp "setuptools are downloaded" "SUCCESS"
 
 # echo_stamp "Install and enable Butterfly (web terminal)"
 # echo_stamp "Workaround for tornado >= 6.0 breaking butterfly"
