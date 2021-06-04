@@ -34,30 +34,52 @@ echo_stamp() {
   echo -e ${TEXT}
 }
 
-echo_stamp "#1 Write STATIC to /etc/dhcpcd.conf"
+apt update
+apt-get update
 
-cat << EOF >> /etc/dhcpcd.conf
-interface wlan0
-static ip_address=192.168.11.1/24
+apt --autoremove purge ifupdown dhcpcd5 isc-dhcp-client isc-dhcp-common -y
+rm -r /etc/network /etc/dhcp
+
+apt --autoremove purge avahi-daemon -y
+apt install libnss-resolve -y
+ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+systemctl enable systemd-resolved.service
+
+systemctl enable systemd-networkd.service
+
+cat > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf <<EOF
+country=DE
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+
+network={
+    ssid="RPiNet"
+    mode=2
+    frequency=2437
+    #key_mgmt=NONE   # uncomment this for an open hotspot
+    # delete next 3 lines if key_mgmt=NONE
+    key_mgmt=WPA-PSK
+    proto=RSN WPA
+    psk="password"
+}
 EOF
 
-echo_stamp "#2 Set wpa_supplicant country"
+chmod 600 /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+systemctl disable wpa_supplicant.service
+systemctl enable wpa_supplicant@wlan0.service
 
-cat << EOF >> /etc/wpa_supplicant/wpa_supplicant.conf
-country=GB
+cat > /etc/systemd/network/08-wlan0.network <<EOF
+[Match]
+Name=wlan0
+[Network]
+Address=192.168.11.1/24
+MulticastDNS=yes
+DHCPServer=yes
 EOF
 
-echo_stamp "#3 Write dhcp-config to /etc/dnsmasq.conf"
-
-cat << EOF >> /etc/dnsmasq.conf
-interface=wlan0
-address=/clover/coex/192.168.11.1
-dhcp-range=192.168.11.100,192.168.11.200,12h
-no-hosts
-filterwin2k
-bogus-priv
-domain-needed
-quiet-dhcp6
+cat > /etc/systemd/network/04-eth0.network <<EOF
+[Match]
+Name=eth0
+[Network]
+DHCP=yes
 EOF
-
-echo_stamp "#4 End of network installation"
