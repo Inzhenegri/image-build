@@ -49,6 +49,7 @@ IMAGES_DIR="${REPO_DIR}/images"
 RPI_ZIP_NAME="test.zip"
 RPI_IMAGE_NAME=$(echo ${RPI_ZIP_NAME} | sed 's/zip/img/')
 IMAGE_NAME="2021-01-11-raspios-buster-armhf-lite.img"
+IMAGE_PATH="${IMAGES_DIR}/${IMAGE_NAME}"
 
 # Downloading original Linux distribution
 if [ ! -e "${RPI_ZIP_NAME}" ]; then
@@ -71,34 +72,19 @@ echo_stamp "Unzipping Linux distribution image" \
 # Monkey
 /usr/sbin/img-chroot ${IMAGE_NAME} copy "builder/assets/monkey" "/root/"
 
-# # rsyslog config
+# rsyslog config
 /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/rsyslog.conf' '/etc'
 /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/rsysrot.sh' '/etc/rsyslog.d'
-# # Butterfly
+# Butterfly
 /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/butterfly.service' '/lib/systemd/system/'
 /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/butterfly.socket' '/lib/systemd/system/'
 /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/monkey.service' '/lib/systemd/system/'
-# # software install
+# software install
 /usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-software.sh'
-# # examples
-# /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/examples' '/home/pi/'  # TODO: symlink?
-# # network setup
-# /usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-network.sh'
-# # avahi setup
-# /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/avahi-services/sftp-ssh.service' '/etc/avahi/services'
+# examples
+/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/examples' '/home/pi/'  # TODO: symlink?
+# network setup
+/usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-network.sh'
 
 
-# Downloading python3 and pip3
-# echo_stamp "Downloading python3 and pip3"
-# apt update
-# apt install python3 python3-pip -y
-# echo_stamp "Downloaded python3 and pip3" "SUCCESS"
-
-# # Downloading pigpio
-# echo_stamp "Installing pigpio"
-# wget https://github.com/joan2937/pigpio/archive/master.zip
-# unzip master.zip
-# cd pigpio-master
-# make
-# make install
-# echo_stamp "Installed pigpio" "SUCCESS"
+/usr/sbin/img-resize '2021-01-11-raspios-buster-armhf-lite.img'

@@ -140,14 +140,15 @@ rm get-pip.py get-pip2.py
 
 pip install --upgrade pip
 pip3 install --upgrade pip
+python -m pip install -U pip
 
 echo_stamp "Make sure both pip and pip3 are installed"
 pip --version
 pip3 --version
 
 echo_stamp "Installing packages"
-pip install numpy pyzmq pygame pyzbar tensorflow imagezmq
-pip3 install numpy pyzmq pygame pyzbar tensorflow imagezmq
+pip install numpy pyzmq pyzbar tensorflow imagezmq
+pip3 install numpy pyzmq pyzbar tensorflow imagezmq
 echo_stamp "Installed pyzmq" "SUCCESS"
 
 echo_stamp "Downloading setuptools"
@@ -183,10 +184,6 @@ rm node-v10.15.0-linux-armv6l.tar.gz
 echo_stamp "Installing ptvsd"
 pip install ptvsd
 pip3 install ptvsd
-
-echo_stamp "Installing pyzbar"
-pip install pyzbar
-pip3 install pyzbar
 
 echo_stamp "Add .vimrc"
 cat << EOF > /home/pi/.vimrc
