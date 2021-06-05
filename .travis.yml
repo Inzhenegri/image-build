@@ -1,0 +1,19 @@
+os: linux
+dist: xenial
+language: generic
+services:
+  - docker
+env:
+  global:
+    - DOCKER="sfalexrog/img-tool:latest"
+    - TARGET_REPO="https://github.com/Inzhenegri/image-build.git"
+    - IMAGE_VERSION=${TRAVIS_TAG:-${TRAVIS_COMMIT:0:7}}
+    - IMAGE_NAME="$(basename -s '.git' ${TARGET_REPO})_${IMAGE_VERSION}.img"
+git:
+  depth: 1
+jobs:
+  fast_finish: true
+  include: []
+
+stages:
+ - Build
