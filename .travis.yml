@@ -5,7 +5,7 @@ services:
   - docker
 env:
   global:
-    - DOCKER="sfalexrog/img-tool:v0.5"
+    - DOCKER="goldarte/img-tool:v0.5"
     - TARGET_REPO="https://github.com/Inzhenegri/image-build.git"
     - if [[ -z ${TRAVIS_TAG} ]]; then IMAGE_VERSION="${TRAVIS_COMMIT}}"; else IMAGE_VERSION="${TRAVIS_TAG}"; fi
     - IMAGE_NAME="$(basename -s '.git' ${TARGET_REPO})_${IMAGE_VERSION}.img"
