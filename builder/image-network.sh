@@ -47,39 +47,39 @@ systemctl enable systemd-resolved.service
 
 systemctl enable systemd-networkd.service
 
-cat > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf <<EOF
-country=DE
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
+# cat > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf <<EOF
+# country=DE
+# ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+# update_config=1
 
-network={
-    ssid="RPiNet"
-    mode=2
-    frequency=2437
-    #key_mgmt=NONE   # uncomment this for an open hotspot
-    # delete next 3 lines if key_mgmt=NONE
-    key_mgmt=WPA-PSK
-    proto=RSN WPA
-    psk="password"
-}
-EOF
+# network={
+#     ssid="RPiNet"
+#     mode=2
+#     frequency=2437
+#     #key_mgmt=NONE   # uncomment this for an open hotspot
+#     # delete next 3 lines if key_mgmt=NONE
+#     key_mgmt=WPA-PSK
+#     proto=RSN WPA
+#     psk="password"
+# }
+# EOF
 
 chmod 600 /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 systemctl disable wpa_supplicant.service
 systemctl enable wpa_supplicant@wlan0.service
 
-cat > /etc/systemd/network/08-wlan0.network <<EOF
-[Match]
-Name=wlan0
-[Network]
-Address=192.168.11.1/24
-MulticastDNS=yes
-DHCPServer=yes
-EOF
+# cat > /etc/systemd/network/08-wlan0.network <<EOF
+# [Match]
+# Name=wlan0
+# [Network]
+# Address=192.168.11.1/24
+# MulticastDNS=yes
+# DHCPServer=yes
+# EOF
 
-cat > /etc/systemd/network/04-eth0.network <<EOF
-[Match]
-Name=eth0
-[Network]
-DHCP=yes
-EOF
+# cat > /etc/systemd/network/04-eth0.network <<EOF
+# [Match]
+# Name=eth0
+# [Network]
+# DHCP=yes
+# EOF

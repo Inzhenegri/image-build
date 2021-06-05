@@ -80,10 +80,12 @@ echo_stamp "Unzipping Linux distribution image" \
 /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/butterfly.socket' '/lib/systemd/system/'
 /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/monkey.service' '/lib/systemd/system/'
 # software install
-/usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-software.sh'
+# /usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-software.sh'
 # examples
 /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/examples' '/home/pi/'  # TODO: symlink?
 # network setup
+/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/wpa_supplicant-wlan0.conf' '/etc/wpa_supplicant/'
+/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/08-wlan0.network' '/etc/systemd/network/'
 /usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-network.sh'
 
 
