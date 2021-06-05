@@ -47,6 +47,8 @@ systemctl enable systemd-resolved.service
 
 systemctl enable systemd-networkd.service
 
+/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/wpa_supplicant-wlan0.conf' '/etc/wpa_supplicant/'
+
 # cat > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf <<EOF
 # country=DE
 # ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -68,6 +70,8 @@ chmod 600 /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 systemctl disable wpa_supplicant.service
 systemctl enable wpa_supplicant@wlan0.service
 
+/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/08-wlan0.network' '/etc/systemd/network/'
+
 # cat > /etc/systemd/network/08-wlan0.network <<EOF
 # [Match]
 # Name=wlan0
@@ -75,11 +79,4 @@ systemctl enable wpa_supplicant@wlan0.service
 # Address=192.168.11.1/24
 # MulticastDNS=yes
 # DHCPServer=yes
-# EOF
-
-# cat > /etc/systemd/network/04-eth0.network <<EOF
-# [Match]
-# Name=eth0
-# [Network]
-# DHCP=yes
 # EOF
