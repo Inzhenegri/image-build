@@ -80,11 +80,9 @@ echo_stamp "Unzipping Linux distribution image" \
 /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/butterfly.socket' '/lib/systemd/system/'
 /usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/monkey.service' '/lib/systemd/system/'
 # software install
-# /usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-software.sh'
-# examples
-/usr/sbin/img-chroot ${IMAGE_NAME} copy 'builder/assets/examples' '/home/pi/'  # TODO: symlink?
+/usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-software.sh'
+
 # network setup
 /usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-network.sh'
-
 
 /usr/sbin/img-resize '2021-01-11-raspios-buster-armhf-lite.img'
