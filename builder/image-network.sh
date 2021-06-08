@@ -91,9 +91,7 @@ domain-needed
 quiet-dhcp6
 EOF
 
-
-###
-###
-
+echo_stamp "Create /boot/ssh file"
+touch /boot/ssh
 
 echo_stamp "#4 End of network installation"

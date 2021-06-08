@@ -1,0 +1,1 @@
+touch /boot/ssh

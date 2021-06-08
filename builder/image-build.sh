@@ -85,4 +85,7 @@ echo_stamp "Unzipping Linux distribution image" \
 # network setup
 /usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-network.sh'
 
+# ssh setup
+/usr/sbin/img-chroot ${IMAGE_NAME} exec 'builder/image-ssh.sh'
+
 /usr/sbin/img-resize '2021-01-11-raspios-buster-armhf-lite.img'

@@ -42,7 +42,7 @@ echo_stamp() {
 # 1. Enable sshd
 echo_stamp "#1 Turn on sshd"
 touch /boot/ssh
-# /usr/bin/raspi-config nonint do_ssh 0
+/usr/bin/raspi-config nonint do_ssh 0
 
 # 2. Enable GPIO
 echo_stamp "#2 GPIO enabled by default"
