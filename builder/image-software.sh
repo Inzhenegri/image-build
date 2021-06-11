@@ -124,8 +124,8 @@ ntpdate \
 python-dev \
 python3-dev \
 python-systemd \
-mjpg-streamer \
-python3-opencv
+mjpg-streamer
+# python3-opencv
 
 # Deny byobu to check available updates
 sed -i "s/updates_available//" /usr/share/byobu/status/status
@@ -202,8 +202,3 @@ gpgconf --kill dirmngr
 pkill -9 -f dirmngr || true
 
 echo_stamp "End of software installation"
-
-# echo_stamp "Testing"
-# git clone --single-branch --branch stable https://github.com/Arseniyyy/banana.git
-# cd banana
-# python3 all_4_raspberry.py
