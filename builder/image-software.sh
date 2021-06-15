@@ -147,9 +147,16 @@ pip --version
 pip3 --version
 
 echo_stamp "Installing packages"
-pip install numpy pyzmq pyzbar tensorflow imagezmq
-pip3 install numpy pyzmq pyzbar tensorflow imagezmq
+pip install numpy pyzmq pyzbar
+pip3 install numpy pyzmq pyzbar
 echo_stamp "Installed pyzmq" "SUCCESS"
+
+# install
+echo_stamp "Installing imagezmq"
+git clone https://github.com/jeffbass/imagezmq.git
+ls imagezmq/imagezmq
+mv imagezmq/imagezmq .
+echo_stamp "Done imagezmq" "SUCCESS"
 
 echo_stamp "Downloading setuptools"
 pip3 install --upgrade setuptools
