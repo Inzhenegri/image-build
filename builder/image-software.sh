@@ -125,7 +125,9 @@ python-dev \
 python3-dev \
 python-systemd \
 mjpg-streamer \
-python3-opencv
+python3-opencv \
+python-picamera \
+python3-picamera
 
 # Deny byobu to check available updates
 sed -i "s/updates_available//" /usr/share/byobu/status/status
@@ -147,8 +149,8 @@ pip --version
 pip3 --version
 
 echo_stamp "Installing packages"
-pip install numpy pyzmq pyzbar
-pip3 install numpy pyzmq pyzbar
+pip3 install numpy pyzmq pyzbar imutils opencv-python
+pip3 install "picamera[array]"
 echo_stamp "Installed pyzmq" "SUCCESS"
 
 # install
@@ -207,5 +209,7 @@ gpgconf --kill dirmngr
 # dirmngr is only used by apt-key, so we can safely kill it.
 # We ignore pkill's exit value as well.
 pkill -9 -f dirmngr || true
+
+git clone https://github.com/Inzhenegri/project-week
 
 echo_stamp "End of software installation"

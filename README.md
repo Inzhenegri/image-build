@@ -8,6 +8,11 @@ git clone https://github.com/Inzhenegri/image-build
 cd image-build
 docker run --privileged -it --rm -v /dev:/dev -v $(pwd):/mnt goldarte/img-tool:v0.5
 ```
+```
+ssh-keygen -f "/home/see-dl-4/.ssh/known_hosts" -R "192.168.11.1"
+ssh pi@192.168.11.1
+```
+
 Также можно запустить другие docker команды с этого репозитория [img-tool](https://github.com/goldarte/img-tool)
 
 ## travis-ci
