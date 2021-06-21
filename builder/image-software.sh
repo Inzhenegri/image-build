@@ -150,15 +150,14 @@ pip3 --version
 
 echo_stamp "Installing packages"
 pip3 install numpy pyzmq pyzbar imutils opencv-python
-pip3 install "picamera[array]"
+pip3 install picamera[array]
 echo_stamp "Installed pyzmq" "SUCCESS"
 
-# install
-echo_stamp "Installing imagezmq"
-git clone https://github.com/jeffbass/imagezmq.git
-ls imagezmq/imagezmq
-mv imagezmq/imagezmq .
-echo_stamp "Done imagezmq" "SUCCESS"
+echo_stamp "Cloning the project-week repository"
+cd home/pi
+git clone https://github.com/Inzhenegri/project-week
+cd ../..
+echo_stamp "Cloned" "SUCCESS"
 
 echo_stamp "Downloading setuptools"
 pip3 install --upgrade setuptools
@@ -209,7 +208,5 @@ gpgconf --kill dirmngr
 # dirmngr is only used by apt-key, so we can safely kill it.
 # We ignore pkill's exit value as well.
 pkill -9 -f dirmngr || true
-
-git clone https://github.com/Inzhenegri/project-week
 
 echo_stamp "End of software installation"
