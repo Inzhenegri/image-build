@@ -147,7 +147,7 @@ pip --version
 pip3 --version
 
 echo_stamp "Installing packages"
-pip3 install numpy pyzmq pyzbar imutils opencv-python
+pip3 install numpy pyzmq pyzbar imutils
 pip3 install picamera[array]
 echo_stamp "Installed pyzmq" "SUCCESS"
 
