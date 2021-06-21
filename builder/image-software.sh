@@ -124,8 +124,8 @@ ntpdate \
 python-dev \
 python3-dev \
 python-systemd \
-mjpg-streamer \
-python3-opencv
+mjpg-streamer
+# python3-opencv
 
 # Deny byobu to check available updates
 sed -i "s/updates_available//" /usr/share/byobu/status/status
@@ -147,9 +147,15 @@ pip --version
 pip3 --version
 
 echo_stamp "Installing packages"
-pip install numpy pyzmq pyzbar tensorflow imagezmq
-pip3 install numpy pyzmq pyzbar tensorflow imagezmq
+pip3 install numpy pyzmq pyzbar imutils
+pip3 install picamera[array]
 echo_stamp "Installed pyzmq" "SUCCESS"
+
+echo_stamp "Cloning the project-week repository"
+cd home/pi
+git clone https://github.com/Inzhenegri/project-week
+cd ../..
+echo_stamp "Cloned" "SUCCESS"
 
 echo_stamp "Downloading setuptools"
 pip3 install --upgrade setuptools
@@ -202,8 +208,3 @@ gpgconf --kill dirmngr
 pkill -9 -f dirmngr || true
 
 echo_stamp "End of software installation"
-
-# echo_stamp "Testing"
-# git clone --single-branch --branch stable https://github.com/Arseniyyy/banana.git
-# cd banana
-# python3 all_4_raspberry.py
