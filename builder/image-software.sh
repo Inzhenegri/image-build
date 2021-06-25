@@ -147,7 +147,7 @@ pip --version
 pip3 --version
 
 echo_stamp "Installing packages"
-pip3 install numpy pyzmq pyzbar
+pip3 install numpy pyzmq pyzbar imutils
 echo_stamp "Installed pyzmq" "SUCCESS"
 
 echo_stamp "Downloading setuptools"
