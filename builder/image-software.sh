@@ -150,6 +150,11 @@ echo_stamp "Installing packages"
 pip3 install numpy pyzmq pyzbar imutils
 echo_stamp "Installed pyzmq" "SUCCESS"
 
+echo_stamp "Getting picamera using wget"
+wget https://archive.raspberrypi.org/debian/pool/main/p/picamera/python3-picamera_1.13_armhf.deb
+dpkg -i python3-picamera_1.13_armhf.deb
+echo_stamp "picamera done"
+
 echo_stamp "Downloading setuptools"
 pip3 install --upgrade setuptools
 echo_stamp "setuptools are downloaded" "SUCCESS"
