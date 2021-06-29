@@ -146,8 +146,12 @@ echo_stamp "Make sure both pip and pip3 are installed"
 pip --version
 pip3 --version
 
+echo_stamp "ffmpeg installation"
+apt install ffmpeg -y
+echo_stamp "ffmpeg installation done" "SUCCESS"
+
 echo_stamp "Installing packages"
-pip3 install numpy pyzmq pyzbar imutils
+pip3 install numpy pyzmq pyzbar imutils aiortc uvloop vidgear
 echo_stamp "Installed pyzmq" "SUCCESS"
 
 echo_stamp "Getting picamera using wget"
