@@ -63,36 +63,53 @@ echo "APT::Acquire::Retries \"3\";" > /etc/apt/apt.conf.d/80-retries
 
 echo_stamp "Install apt keys & repos"
 
-# TODO: This STDOUT consist 'OK'
-curl http://deb.coex.tech/aptly_repo_signing.key 2> /dev/null | apt-key add -
-apt-get update \
-&& apt-get install --no-install-recommends -y dirmngr > /dev/null \
-&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+# # TODO: This STDOUT consist 'OK'
+# curl http://deb.coex.tech/aptly_repo_signing.key 2> /dev/null | apt-key add -
+# apt-get update \
+# && apt-get install --no-install-recommends -y dirmngr > /dev/null \
+# && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-echo "deb http://packages.ros.org/ros/ubuntu buster main" > /etc/apt/sources.list.d/ros-latest.list
-echo "deb http://deb.coex.tech/opencv3 buster main" > /etc/apt/sources.list.d/opencv3.list
-echo "deb http://deb.coex.tech/rpi-ros-melodic buster main" > /etc/apt/sources.list.d/rpi-ros-melodic.list
-echo "deb http://deb.coex.tech/clover buster main" > /etc/apt/sources.list.d/clover.list
-
-echo_stamp "Update apt cache"
+# echo "deb http://packages.ros.org/ros/ubuntu buster main" > /etc/apt/sources.list.d/ros-latest.list
+# echo "deb http://deb.coex.tech/opencv3 buster main" > /etc/apt/sources.list.d/opencv3.list
+# echo "deb http://deb.coex.tech/rpi-ros-melodic buster main" > /etc/apt/sources.list.d/rpi-ros-melodic.list
+# echo "deb http://deb.coex.tech/clover buster main" > /etc/apt/sources.list.d/clover.list
 
 # TODO: FIX ERROR: /usr/bin/apt-key: 596: /usr/bin/apt-key: cannot create /dev/null: Permission denied
+echo_stamp "Updating apt-get"
 apt-get update
+echo_stamp "Done updating apt-get" "SUCCESS"
 
 echo_stamp "Update apt"
-apt update
+apt update -y
+apt install git python3-pip python-pip -y
 dpkg --configure -a
 echo_stamp "Apt updated" "SUCCESS"
 
-echo_stamp "Upgrading installed packages"
-apt-get upgrade -y
-apt upgrade -y
-echo_stamp "Upgraded" "SUCCESS"
+echo_stamp "ffmpeg installation"
+apt install ffmpeg -y
+echo_stamp "Done ffmpeg" "SUCCESS"
+
+echo_stamp "Vidgear installation"
+pip3 install vidgear
+echo_stamp "Done vidgear" "SUCCESS"
+
+# echo_stamp "Building mjpg-streamer"
+# apt-get install libjpeg8-dev imagemagick libv4l-dev -y
+# ln -s /usr/include/linux/videodev2.h /usr/include/linux/videodev.h
+# wget http://sourceforge.net/p/mjpg-streamer/code/HEAD/tarball
+# unzip mjpg-streamer-code-182.zip
+# cd mjpg-streamer-code-182/mjpg-streamer
+# make mjpg_streamer input_file.so output_http.so
+# cp mjpg_streamer /usr/local/bin
+# cp output_http.so input_file.so /usr/local/lib/
+# cp -R www /usr/local/www
+# echo_stamp "Done mjpg-streamer build" "SUCCESS"
+
 
 # Let's retry fetching those packages several times, just in case
-echo_stamp "Software installing"
-apt-get install --no-install-recommends -y --allow-downgrades cmake-data=3.13.4-1 cmake=3.13.4-1 # FIXME: using older CMake due to https://travis-ci.org/github/CopterExpress/clover/jobs/764367665#L6984
-apt-get install --no-install-recommends -y \
+echo_stamp "Software installation"
+apt install --no-install-recommends -y --allow-downgrades cmake-data=3.13.4-1 cmake=3.13.4-1 # FIXME: using older CMake due to https://travis-ci.org/github/CopterExpress/clover/jobs/764367665#L6984
+apt install --no-install-recommends -y \
 unzip \
 zip \
 ipython \
@@ -124,19 +141,24 @@ ntpdate \
 python-dev \
 python3-dev \
 python-systemd \
-mjpg-streamer \
-python3-opencv
+python3-opencv \
+libatlas-base-dev \
+python3-numpy
+
+# echo_stamp "Upgrading installed packages"
+# apt upgrade -y
+# echo_stamp "Upgraded" "SUCCESS"
 
 # Deny byobu to check available updates
 sed -i "s/updates_available//" /usr/share/byobu/status/status
 # sed -i "s/updates_available//" /home/pi/.byobu/status
 
-echo_stamp "Installing pip"
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip2.py
-python3 get-pip.py
-python get-pip2.py
-rm get-pip.py get-pip2.py
+# echo_stamp "Installing pip"
+# curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+# curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip2.py
+# python3 get-pip.py
+# python get-pip2.py
+# rm get-pip.py get-pip2.py
 
 pip install --upgrade pip
 pip3 install --upgrade pip
@@ -150,18 +172,18 @@ echo_stamp "ffmpeg installation"
 apt install ffmpeg -y
 echo_stamp "ffmpeg installation done" "SUCCESS"
 
+echo_stamp "Downloading setuptools"
+pip3 install setuptools
+echo_stamp "setuptools are downloaded" "SUCCESS"
+
 echo_stamp "Installing packages"
-pip3 install numpy pyzmq pyzbar imutils aiortc uvloop vidgear
-echo_stamp "Installed pyzmq" "SUCCESS"
+pip3 install pyzmq pyzbar imutils
+echo_stamp "Packages are downloaded" "SUCCESS"
 
 echo_stamp "Getting picamera using wget"
 wget https://archive.raspberrypi.org/debian/pool/main/p/picamera/python3-picamera_1.13_armhf.deb
 dpkg -i python3-picamera_1.13_armhf.deb
-echo_stamp "picamera done"
-
-echo_stamp "Downloading setuptools"
-pip3 install --upgrade setuptools
-echo_stamp "setuptools are downloaded" "SUCCESS"
+echo_stamp "picamera done" "SUCCESS"
 
 echo_stamp "Install and enable Butterfly (web terminal)"
 echo_stamp "Workaround for tornado >= 6.0 breaking butterfly"
@@ -210,8 +232,3 @@ gpgconf --kill dirmngr
 pkill -9 -f dirmngr || true
 
 echo_stamp "End of software installation"
-
-# echo_stamp "Testing"
-# git clone --single-branch --branch stable https://github.com/Arseniyyy/banana.git
-# cd banana
-# python3 all_4_raspberry.py
