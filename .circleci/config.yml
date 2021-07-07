@@ -36,4 +36,4 @@ jobs:
 
       - run:
           name: Check if the image file has been placed here.
-          command: ls
+          command: ls && echo "Done"
