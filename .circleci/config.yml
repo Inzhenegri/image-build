@@ -21,7 +21,7 @@ jobs:
           command: go get github.com/tcnksm/ghr
 
       - run:
-          name: 
+          name: Check if ghr has been installed
           command: ghr -v
 
       - run:
