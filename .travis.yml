@@ -8,7 +8,7 @@ env:
     - DOCKER="goldarte/img-tool:v0.5"
     - TARGET_REPO="https://github.com/Inzhenegri/image-build.git"
     - if [[ -z ${TRAVIS_TAG} ]]; then IMAGE_VERSION="${TRAVIS_COMMIT}}"; else IMAGE_VERSION="${TRAVIS_TAG}"; fi
-    - IMAGE_NAME="$(basename -s '.git' ${TARGET_REPO})_${IMAGE_VERSION}.img"
+    - IMAGE_NAME="2021-01-11-raspios-buster-armhf-lite.img"
 git:
   depth: false
 jobs:
@@ -31,6 +31,8 @@ jobs:
         - git config --local user.email "arskosh05@mail.ru"
         - sudo chmod -R 777 *
         - cd images && zip ${IMAGE_NAME}.zip ${IMAGE_NAME}
+        - export TRAVIS_TAG=${TRAVIS_TAG:-$(date + '%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+        - git tag $TRAVIS_TAG
       deploy:
         provider: releases
         token: ${GITHUB_OAUTH_TOKEN}
@@ -38,7 +40,7 @@ jobs:
         skip_cleanup: true
         on:
           tags: true
-        draft: true
+        draft: false
         name: ${TRAVIS_TAG}
 
 stages:
