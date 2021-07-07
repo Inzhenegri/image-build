@@ -143,7 +143,7 @@ python3-numpy
 
 echo_stamp "Installing raspberry pi GPIO tools"
 apt install -y python-smbus i2c-tools
-pip3 install adafruit-blinka adafruit-circuitpython-dht
+pip3 install adafruit-blinka adafruit-circuitpython-dht dht11
 apt install -y libgpiod2
 echo_stamp "Done raspberry pi GPIO tools" "SUCCESS"
 
