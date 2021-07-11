@@ -89,6 +89,10 @@ echo_stamp "ffmpeg installation"
 apt install ffmpeg -y
 echo_stamp "Done ffmpeg" "SUCCESS"
 
+echo_stamp "Vidgear installation"
+pip3 install vidgear
+echo_stamp "Done vidgear" "SUCCESS"
+
 # echo_stamp "Building mjpg-streamer"
 # apt-get install libjpeg8-dev imagemagick libv4l-dev -y
 # ln -s /usr/include/linux/videodev2.h /usr/include/linux/videodev.h
@@ -138,14 +142,8 @@ python-dev \
 python3-dev \
 python-systemd \
 python3-opencv \
-libatlas-base-dev \
-python3-numpy
-
-echo_stamp "Installing raspberry pi GPIO tools"
-apt install -y python-smbus i2c-tools
-pip3 install adafruit-blinka adafruit-circuitpython-dht dht11
-apt install -y libgpiod2
-echo_stamp "Done raspberry pi GPIO tools" "SUCCESS"
+libatlas-base-dev
+# python3-numpy
 
 # echo_stamp "Upgrading installed packages"
 # apt upgrade -y
@@ -170,25 +168,28 @@ echo_stamp "Make sure both pip and pip3 are installed"
 pip --version
 pip3 --version
 
+echo_stamp "Installing raspberry pi GPIO tools"
+apt install -y python-smbus i2c-tools
+pip3 install adafruit-blinka adafruit-circuitpython-dht dht11
+apt install -y libgpiod2
+echo_stamp "Done raspberry pi GPIO tools" "SUCCESS"
+
+echo_stamp "ffmpeg installation"
+apt install ffmpeg -y
+echo_stamp "ffmpeg installation done" "SUCCESS"
+
 echo_stamp "Downloading setuptools"
 pip3 install setuptools
 echo_stamp "setuptools are downloaded" "SUCCESS"
 
 echo_stamp "Installing packages"
-pip3 install pyzmq pyzbar imutils RPi.GPIO
+pip3 install numpy==1.20.0 pyzmq pyzbar imutils
 echo_stamp "Packages are downloaded" "SUCCESS"
 
 echo_stamp "Getting picamera using wget"
 wget https://archive.raspberrypi.org/debian/pool/main/p/picamera/python3-picamera_1.13_armhf.deb
 dpkg -i python3-picamera_1.13_armhf.deb
 echo_stamp "picamera done" "SUCCESS"
-
-echo_stamp "Vidgear installation"
-git clone https://github.com/abhiTronix/vidgear.git && cd vidgear
-git checkout development
-pip3 install .
-pip3 install .[asyncio]
-echo_stamp "Done vidgear" "SUCCESS"
 
 echo_stamp "Install and enable Butterfly (web terminal)"
 echo_stamp "Workaround for tornado >= 6.0 breaking butterfly"
