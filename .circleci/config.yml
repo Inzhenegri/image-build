@@ -1,0 +1,39 @@
+version: 2.1
+jobs:
+  build:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - run:
+          name: Installing docker
+          command: |
+            sudo apt update -y
+            sudo apt install -y docker-ce docker-ce-cli containerd.io golang-go
+
+      - run:
+          name: Docker run
+          command: |
+            docker run --privileged -it --rm -v /dev:/dev -v $(pwd):/mnt goldarte/img-tool:v0.5
+
+      - run:
+          name: Getting ghr
+          command: go get github.com/tcnksm/ghr
+
+      - run:
+          name: Check if ghr has been installed
+          command: ghr -v
+
+      - run:
+          name: Testing artifacts
+          command: |
+            zip 2021-01-11-raspios-buster-armhf-lite.zip 2021-01-11-raspios-buster-armhf-lite.img
+
+      - run:
+          name: Using ghr
+          command: |
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c $CIRCLE_SHA1 -delete ${VERSION} ./2021-01-11-raspios-buster-armhf-lite.zip
+
+      - run:
+          name: Check if the image file has been placed here.
+          command: ls && echo "Done"

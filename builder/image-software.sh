@@ -142,8 +142,8 @@ python-dev \
 python3-dev \
 python-systemd \
 python3-opencv \
-libatlas-base-dev \
-python3-numpy
+libatlas-base-dev
+# python3-numpy
 
 # echo_stamp "Upgrading installed packages"
 # apt upgrade -y
@@ -168,6 +168,12 @@ echo_stamp "Make sure both pip and pip3 are installed"
 pip --version
 pip3 --version
 
+echo_stamp "Installing raspberry pi GPIO tools"
+apt install -y python-smbus i2c-tools
+pip3 install adafruit-blinka adafruit-circuitpython-dht dht11
+apt install -y libgpiod2
+echo_stamp "Done raspberry pi GPIO tools" "SUCCESS"
+
 echo_stamp "ffmpeg installation"
 apt install ffmpeg -y
 echo_stamp "ffmpeg installation done" "SUCCESS"
@@ -177,7 +183,7 @@ pip3 install setuptools
 echo_stamp "setuptools are downloaded" "SUCCESS"
 
 echo_stamp "Installing packages"
-pip3 install pyzmq pyzbar imutils
+pip3 install numpy==1.20.0 pyzmq pyzbar imutils
 echo_stamp "Packages are downloaded" "SUCCESS"
 
 echo_stamp "Getting picamera using wget"
@@ -196,12 +202,12 @@ systemctl enable butterfly.socket
 echo_stamp "Install ws281x library"
 pip install --prefer-binary rpi_ws281x
 
-echo_stamp "Setup Monkey"
-mv /etc/monkey/sites/default /etc/monkey/sites/default.orig
-mv /root/monkey /etc/monkey/sites/default
-sed -i 's/SymLink Off/SymLink On/' /etc/monkey/monkey.conf
-systemctl enable monkey.service
-echo_stamp "Setup Monkey done" "SUCCESS"
+# echo_stamp "Setup Monkey"
+# mv /etc/monkey/sites/default /etc/monkey/sites/default.orig
+# mv /root/monkey /etc/monkey/sites/default
+# sed -i 's/SymLink Off/SymLink On/' /etc/monkey/monkey.conf
+# systemctl enable monkey.service
+# echo_stamp "Setup Monkey done" "SUCCESS"
 
 echo_stamp "Install Node.js"
 cd /home/pi
