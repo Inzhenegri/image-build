@@ -35,7 +35,7 @@ echo_stamp() {
 }
 
 
-NEW_SSID='eyecar-'$(head -c 100 /dev/urandom | xxd -ps -c 100 | sed -e "s/[^0-9]//g" | cut -c 1-4)
+NEW_SSID='eyecar2-'$(head -c 100 /dev/urandom | xxd -ps -c 100 | sed -e "s/[^0-9]//g" | cut -c 1-4)
 echo_stamp "Setting SSID to ${NEW_SSID}"
 # TODO: Use wpa_cli insted direct file edit
 # FIXME: We rely on raspberrypi-net-mods to copy our file to /etc/wpa_supplicant.
@@ -69,7 +69,7 @@ echo_stamp "#1 Write STATIC to /etc/dhcpcd.conf"
 
 cat << EOF >> /etc/dhcpcd.conf
 interface wlan0
-static ip_address=192.168.11.1/24
+static ip_address=192.168.11.2/24
 EOF
 
 echo_stamp "#2 Set wpa_supplicant country"
@@ -82,7 +82,7 @@ echo_stamp "#3 Write dhcp-config to /etc/dnsmasq.conf"
 
 cat << EOF >> /etc/dnsmasq.conf
 interface=wlan0
-address=/clover/coex/192.168.11.1
+address=/clover/coex/192.168.11.2
 dhcp-range=192.168.11.100,192.168.11.200,12h
 no-hosts
 filterwin2k
